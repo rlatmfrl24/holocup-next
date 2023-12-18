@@ -1,6 +1,9 @@
+import "./globals.css";
+import Header from "@/components/header";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Separator } from "@/components/ui/separator";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +19,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className + ` h-screen w-full flex flex-col`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          <Separator />
+          <div className="flex flex-auto overflow-auto h-0 bg-slate-400">
+            {children}
+          </div>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
