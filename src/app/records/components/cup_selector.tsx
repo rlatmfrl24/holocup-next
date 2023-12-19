@@ -15,7 +15,7 @@ import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { NextPage } from "next";
 import { useState } from "react";
-import { useCurrentCup } from "./store";
+import { useCurrentCup } from "../store";
 
 const CupSelector: NextPage<{
   cupList: CupInfoType[];
