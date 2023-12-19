@@ -64,14 +64,14 @@ export default function About() {
           용도로 활용되 었습니다.
         </span>
         <span>
-          해당 사이트로 인하여 저작권 피해를 받거나 어려움이 있으실시 `
+          해당 사이트로 인하여 저작권 피해를 받거나 어려움이 있으실시
           <a
             href="mailto:397love@gmail.com"
             className="text-blue-500 underline"
           >
             397love@gmail.com
           </a>
-          `로 연락주시면 도와드리겠습니다.
+          로 연락주시면 도와드리겠습니다.
         </span>
       </p>
       <ul className="list-disc list-inside">
