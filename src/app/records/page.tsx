@@ -1,6 +1,7 @@
 import clientPromise from "@/lib/mongodb";
 import { CupInfoType } from "@/lib/typeDef";
 import CupSelector from "./components";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default async function Records() {
   const cupList = await getCupListData();
@@ -11,14 +12,16 @@ export default async function Records() {
         <h1 className="text-4xl font-extrabold">Records</h1>
         <CupSelector cupList={cupList} />
       </div>
-      {cupList.map((cup) => {
-        return (
-          <div key={cup._id.id.toString()}>
-            <span>{cup.name_kr}</span>
-            <span>{cup.name_en}</span>
-          </div>
-        );
-      })}
+      <Tabs defaultValue="overview">
+        <TabsList>
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="entry">Entry</TabsTrigger>
+          <TabsTrigger value="rounds">Rounds</TabsTrigger>
+        </TabsList>
+        <TabsContent value="overview"></TabsContent>
+        <TabsContent value="entry"></TabsContent>
+        <TabsContent value="rounds "></TabsContent>
+      </Tabs>
     </div>
   );
 }
