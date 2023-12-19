@@ -28,9 +28,7 @@ export default function RootLayout({
         >
           <Header />
           <Separator />
-          <div className="flex flex-auto overflow-auto h-0 bg-slate-400">
-            {children}
-          </div>
+          <div className="flex flex-auto overflow-auto h-0">{children}</div>
         </ThemeProvider>
       </body>
     </html>
