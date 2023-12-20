@@ -1,8 +1,7 @@
-import clientPromise from "@/lib/mongodb";
 import Overview from "./components/overview";
 import CupSelector from "./components/cup_selector";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CupInfoType } from "@/lib/typeDef";
+import { getCupListData } from "./utils";
 
 export default async function Records() {
   const cupList = await getCupListData();
@@ -24,21 +23,4 @@ export default async function Records() {
       </Tabs>
     </div>
   );
-}
-
-export async function getCupListData(): Promise<CupInfoType[]> {
-  const client = await clientPromise;
-  const db = client.db("holocup_next");
-  const cupInfo = db.collection("cup_info");
-  const cupListData = await cupInfo.find({}).toArray();
-  const cupList = cupListData.map((cup) => {
-    return {
-      _id: cup._id,
-      code: cup.code as string,
-      name_kr: cup.name.kr as string,
-      name_en: cup.name.en as string,
-    } as CupInfoType;
-  });
-
-  return cupList;
 }
