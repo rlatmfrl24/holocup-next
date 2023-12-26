@@ -15,7 +15,7 @@ export default async function Records() {
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="rounds">Rounds</TabsTrigger>
         </TabsList>
-        <CupSelector cupList={cupList} />
+        <CupSelector />
         <TabsContent value="overview">
           <Overview />
         </TabsContent>

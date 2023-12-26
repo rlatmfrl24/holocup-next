@@ -67,11 +67,38 @@ export default function About() {
           해당 사이트로 인하여 저작권 피해를 받거나 어려움이 있으실시
           <a
             href="mailto:397love@gmail.com"
-            className="text-blue-500 underline"
+            className="text-blue-500 underline mx-1"
           >
             397love@gmail.com
           </a>
           로 연락주시면 도와드리겠습니다.
+        </span>
+      </p>
+      <p className="flex flex-col my-2">
+        <span>
+          These data sources are communities and sites that were used solely for
+          data utilization purposes and are not affiliated with the creators in
+          any way.
+        </span>
+        <span>
+          The data was utilized with the consent of the original author, and if
+          there is any further inquiry, the data will be deleted and replaced
+          with alternative data.
+        </span>
+        <span>
+          In addition, it does not pursue commercial purposes in any way and is
+          utilized solely for learning purposes.
+        </span>
+        <span>
+          If you receive copyright damage or have any difficulties due to this
+          site, please contact
+          <a
+            href="mailto:397love@gmail.com"
+            className="text-blue-500 underline mx-1"
+          >
+            397love@gmail.com
+          </a>
+          and we will help you.
         </span>
       </p>
       <ul className="list-disc list-inside">

@@ -9,19 +9,17 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import { PopoverContent } from "@/components/ui/popover";
-import { CupInfoType } from "@/lib/typeDef";
 import { cn } from "@/lib/utils";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
 import { Check, ChevronsUpDown } from "lucide-react";
-import { NextPage } from "next";
 import { useState } from "react";
 import { useCurrentCup } from "../store";
+import { useBaseData } from "@/lib/store";
 
-const CupSelector: NextPage<{
-  cupList: CupInfoType[];
-}> = ({ cupList }) => {
+const CupSelector = () => {
   const [isOpen, setIsOpen] = useState(false);
   const currentCup = useCurrentCup();
+  const cupList = useBaseData((state) => state.cupData);
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -46,8 +44,7 @@ const CupSelector: NextPage<{
             {cupList.map((cup) => {
               return (
                 <CommandItem
-                  key={cup?._id?.id?.toString()}
-                  variant="outline"
+                  key={cup.code}
                   value={cup.name_kr}
                   onSelect={() => {
                     currentCup.setCurrentCup(cup);

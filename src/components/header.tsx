@@ -9,8 +9,21 @@ import {
   navigationMenuTriggerStyle,
 } from "./ui/navigation-menu";
 import { NavigationMenuItem } from "@radix-ui/react-navigation-menu";
+import { CupInfoType, MemberType, RoundType } from "@/lib/typeDef";
+import { useBaseData } from "@/lib/store";
 
-export default function Header() {
+export default function Header({
+  cupList,
+  memberList,
+  roundList,
+}: {
+  cupList: CupInfoType[];
+  memberList: MemberType[];
+  roundList: RoundType[];
+}) {
+  const initialize = useBaseData.getState().initialize;
+  initialize(cupList, memberList, roundList);
+
   return (
     <div className="flex items-center gap-2 px-4 py-3">
       <Link href="/">
