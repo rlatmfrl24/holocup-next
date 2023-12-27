@@ -5,9 +5,8 @@ import RoundSelector from "./components/round_selector";
 
 export default async function Records() {
   return (
-    <div className="p-4 flex-1 container mx-auto">
-      <h1 className="text-4xl font-extrabold">Records</h1>
-      <div className="flex gap-3 mb-3 items-center"></div>
+    <div className="p-4 flex-1 container mx-auto ">
+      <h1 className="text-4xl font-extrabold mb-3">Records</h1>
       <Tabs defaultValue="overview">
         <TabsList className="mr-2">
           <TabsTrigger value="overview">Overview</TabsTrigger>
