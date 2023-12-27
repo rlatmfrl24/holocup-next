@@ -19,7 +19,9 @@ import { useBaseData } from "@/lib/store";
 const CupSelector = () => {
   const [isOpen, setIsOpen] = useState(false);
   const currentCup = useCurrentCup();
-  const cupList = useBaseData((state) => state.cupData);
+  const cupList = useBaseData((state) => state.cupData).sort(
+    (a, b) => b.year - a.year
+  );
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>

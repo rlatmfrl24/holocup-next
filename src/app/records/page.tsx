@@ -1,13 +1,10 @@
 import Overview from "./components/overview";
 import CupSelector from "./components/cup_selector";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getCupListData } from "./utils";
 
 export default async function Records() {
-  const cupList = await getCupListData();
-
   return (
-    <div className="p-4 flex-1">
+    <div className="p-4 flex-1 container mx-auto">
       <h1 className="text-4xl font-extrabold">Records</h1>
       <div className="flex gap-3 mb-3 items-center"></div>
       <Tabs defaultValue="overview">

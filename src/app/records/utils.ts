@@ -1,40 +1,131 @@
-import clientPromise from "@/lib/mongodb";
-import { CupInfoType } from "@/lib/typeDef";
+import { CupInfoType, RoundType } from "@/lib/typeDef";
 
-export async function getCupListData(): Promise<CupInfoType[]> {
-  const client = await clientPromise;
-  const db = client.db("holocup_next");
-  const cupInfo = db.collection("cup_info");
-  const cupListData = await cupInfo.find({}).toArray();
-  const cupList = cupListData.map((cup) => {
-    return {
-      code: cup.code as string,
-      type: cup.type as string,
-      year: cup.year as number,
-      name_kr: cup.name.kr as string,
-      name_en: cup.name.en as string,
-    } as CupInfoType;
-  });
+type MemberResult = {
+  member_code: string;
+  point: number;
+  races: number[];
+};
 
-  return cupList;
+function makeCupOverviewData(
+  cupInfo: CupInfoType,
+  data: RoundType[]
+): {
+  champion: MemberResult;
+  secondWinner: MemberResult;
+  thirdWinner: MemberResult;
+  jakocupWinner: MemberResult;
+  jakocupLastOne: MemberResult;
+  blockGroups: { [key: string]: MemberResult[] };
+} {
+  const cupRounds = data.filter(
+    (round) => round.cup_code === "NEWYEAR_CUP" && round.year === cupInfo.year
+  );
+
+  const championshipResult = cupRounds
+    .filter((round) => round.round_code === "CHAMPIONSHIP")
+    .map((round) => {
+      return {
+        member_code: round.member_code,
+        point: sumRacePoints(round.race_results),
+        races: round.race_results,
+      };
+    });
+
+  const jakocupResult = cupRounds
+    .filter((round) => round.round_code === "JAKOCUP")
+    .map((round) => {
+      return {
+        member_code: round.member_code,
+        point: sumRacePoints(round.race_results),
+        races: round.race_results,
+      };
+    });
+
+  const blockGroups = cupRounds
+    .filter((round) => round.round_code === "TRYOUT")
+    // grouped  member data by block_code
+    .reduce((acc, cur) => {
+      const block_code = cur.block_code;
+      if (acc[block_code]) {
+        acc[block_code].push({
+          member_code: cur.member_code,
+          point: sumRacePoints(cur.race_results),
+          races: cur.race_results,
+        } as MemberResult);
+      } else {
+        acc[block_code] = [
+          {
+            member_code: cur.member_code,
+            point: sumRacePoints(cur.race_results),
+            races: cur.race_results,
+          } as MemberResult,
+        ];
+      }
+      return acc;
+    }, {} as { [key: string]: MemberResult[] });
+
+  // get winners of championship
+  const champion = championshipResult.sort((a, b) => b.point - a.point)[0];
+  const secondWinner = championshipResult
+    .sort((a, b) => b.point - a.point)
+    .slice(1, 2)[0];
+  const thirdWinner = championshipResult
+    .sort((a, b) => b.point - a.point)
+    .slice(2, 3)[0];
+
+  // get members of jakocup
+  const jakocupWinner = jakocupResult.sort((a, b) => b.point - a.point)[0];
+  const jakocupLastOne = jakocupResult
+    .sort((a, b) => b.point - a.point)
+    .slice(-1)[0];
+
+  return {
+    champion,
+    secondWinner,
+    thirdWinner,
+    jakocupWinner,
+    jakocupLastOne,
+    blockGroups,
+  };
 }
 
-export async function getOverviewData(cupType: string, year: number) {
-  const client = await clientPromise;
-  const db = client.db("holocup_next");
-  const collection = db.collection("rounds");
-  const roundsData = await collection
-    .find({ cup_code: cupType, year: year })
-    .toArray();
-  const rounds = roundsData.map((round) => {
-    return {
-      cup_code: round.cup_code,
-      year: round.year,
-      round_code: round.round_code,
-      block_code: round.block_code,
-      member_code: round.member_code,
-      race_results: round.race_results,
-    };
-  });
-  return rounds;
+function makeETCOvrData(cupCode: string, data: RoundType[]) {
+  const cupRounds = data.filter((round) => round.cup_code === cupCode);
 }
+
+function sumRacePoints(race_results: number[]) {
+  const point_table: { [key: number]: number } = {
+    1: 15,
+    2: 12,
+    3: 10,
+    4: 9,
+    5: 8,
+    6: 7,
+    7: 6,
+    8: 5,
+    9: 4,
+    10: 3,
+    11: 2,
+    12: 1,
+  };
+
+  return race_results.reduce((acc, cur) => {
+    return acc + (point_table[cur] ? point_table[cur] : 0);
+  }, 0);
+}
+
+function convertMemberCodeToName(memberCode: string) {
+  return (
+    memberCode
+      .replaceAll("_", " ")
+      // capitalize first letter of each word
+      .replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()))
+  );
+}
+
+export {
+  makeCupOverviewData,
+  makeETCOvrData,
+  sumRacePoints,
+  convertMemberCodeToName,
+};
