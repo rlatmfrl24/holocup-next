@@ -1,6 +1,7 @@
 import Overview from "./components/overview";
 import CupSelector from "./components/cup_selector";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import RoundSelector from "./components/round_selector";
 
 export default async function Records() {
   return (
@@ -13,6 +14,7 @@ export default async function Records() {
           <TabsTrigger value="rounds">Rounds</TabsTrigger>
         </TabsList>
         <CupSelector />
+        <RoundSelector />
         <TabsContent value="overview">
           <Overview />
         </TabsContent>
