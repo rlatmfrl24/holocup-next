@@ -1,4 +1,5 @@
 import { CupInfoType, RoundType } from "@/lib/typeDef";
+import { sumRacePoints } from "@/lib/utils";
 
 type MemberResult = {
   member_code: string;
@@ -205,39 +206,4 @@ function makeETCOverviewData(cupInfo: CupInfoType, data: RoundType[]) {
   };
 }
 
-function sumRacePoints(race_results: number[]) {
-  const point_table: { [key: number]: number } = {
-    1: 15,
-    2: 12,
-    3: 10,
-    4: 9,
-    5: 8,
-    6: 7,
-    7: 6,
-    8: 5,
-    9: 4,
-    10: 3,
-    11: 2,
-    12: 1,
-  };
-
-  return race_results.reduce((acc, cur) => {
-    return acc + (point_table[cur] ? point_table[cur] : 0);
-  }, 0);
-}
-
-function convertMemberCodeToName(memberCode: string) {
-  return (
-    memberCode
-      .replaceAll("_", " ")
-      // capitalize first letter of each word
-      .replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()))
-  );
-}
-
-export {
-  makeCupOverviewData,
-  makeETCOverviewData,
-  sumRacePoints,
-  convertMemberCodeToName,
-};
+export { makeCupOverviewData, makeETCOverviewData };

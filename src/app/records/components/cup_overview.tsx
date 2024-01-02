@@ -2,12 +2,13 @@
 
 import { useBaseData } from "@/lib/store";
 import { useSelectorState } from "../store";
-import { convertMemberCodeToName, makeCupOverviewData } from "../utils";
+import { makeCupOverviewData } from "../utils";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import MemberFrameCard from "./member_frame_card";
+import { convertMemberCodeToName } from "@/lib/utils";
 
 export default function CupOverview() {
   const currentCup = useSelectorState((state) => state.currentCup);

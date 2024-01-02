@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useBaseData } from "@/lib/store";
 import { useSelectorState } from "../store";
-import { convertMemberCodeToName, sumRacePoints } from "../utils";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { convertMemberCodeToName, sumRacePoints } from "@/lib/utils";
 
 const RoundLeaderboard = () => {
   const memberData = useBaseData((state) => state.memberData);

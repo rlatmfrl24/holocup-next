@@ -24,6 +24,13 @@ export default function Header({
   const initialize = useBaseData.getState().initialize;
   initialize(cupList, memberList, roundList);
 
+  const menus = [
+    { label: "New Year Cup 2024", href: "/new_year_cup_2024" },
+    { label: "Records", href: "/records" },
+    { label: "Leaderboard", href: "/leaderboard" },
+    { label: "About", href: "/about" },
+  ];
+
   return (
     <div className="flex items-center gap-2 px-4 py-3">
       <Link href="/">
@@ -31,27 +38,15 @@ export default function Header({
       </Link>
       <NavigationMenu>
         <NavigationMenuList>
-          <NavigationMenuItem>
-            <Link href="/new_year_cup_2024" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                New Year Cup 2024
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/records" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Records
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/about" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                About
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
+          {menus.map((menu) => (
+            <NavigationMenuItem key={menu.href}>
+              <Link href={menu.href} legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  {menu.label}
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+          ))}
         </NavigationMenuList>
       </NavigationMenu>
     </div>

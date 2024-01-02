@@ -2,14 +2,17 @@
 
 import Overview from "./components/overview";
 import CupSelector from "./components/cup_selector";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RoundSelector from "./components/round_selector";
-import { useState } from "react";
 import RoundChart from "./components/round_chart";
 import RoundLeaderboard from "./components/round_leaderboard";
+import { useState } from "react";
+import { useSelectorState } from "./store";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export default function Records() {
   const [tabValue, setTabValue] = useState("overview");
+  const currentCup = useSelectorState((state) => state.currentCup);
 
   return (
     <div className="p-4 flex-1 container mx-auto">
@@ -34,10 +37,19 @@ export default function Records() {
           <Overview />
         </TabsContent>
         <TabsContent value="rounds">
-          <div className="flex gap-2">
-            <RoundChart />
-            <RoundLeaderboard />
-          </div>
+          {currentCup ? (
+            <div className="flex gap-2">
+              <RoundChart />
+              <RoundLeaderboard />
+            </div>
+          ) : (
+            <Alert variant={"default"}>
+              <AlertTitle>대회를 선택해주세요!</AlertTitle>
+              <AlertDescription>
+                대회를 선택하지 않으면 기록을 볼 수 없습니다.
+              </AlertDescription>
+            </Alert>
+          )}
         </TabsContent>
       </Tabs>
     </div>
