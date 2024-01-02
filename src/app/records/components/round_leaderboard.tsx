@@ -41,7 +41,7 @@ const RoundLeaderboard = () => {
     .sort((a, b) => b.member_point - a.member_point);
 
   return (
-    <Card>
+    <Card className="mb-4">
       <CardHeader>
         <CardTitle>Leaderboard</CardTitle>
       </CardHeader>

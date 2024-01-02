@@ -120,7 +120,7 @@ const RoundChart = () => {
   ]);
 
   return (
-    <Card className="flex-1">
+    <Card className="flex-1 mb-4">
       <CardHeader>
         <CardTitle>Round Chart</CardTitle>
       </CardHeader>

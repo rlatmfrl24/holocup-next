@@ -34,12 +34,10 @@ const Leaderboard = () => {
       return b.member_ranking_point - a.member_ranking_point;
     });
 
-  console.log(rankingData);
-
   return (
     <div className="p-4 flex-1 container mx-auto">
       <h1 className="text-4xl font-extrabold mb-3">Leaderboard</h1>
-      <Table>
+      <Table className="mb-4">
         <TableHeader>
           <TableRow>
             <TableHead className="w-28 text-center">Rank</TableHead>
