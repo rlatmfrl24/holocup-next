@@ -7,6 +7,9 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 const RoundLeaderboard = () => {
   const memberData = useBaseData((state) => state.memberData);
   const roundData = useBaseData((state) => state.roundData);
+  const setEmphasizedMember = useSelectorState(
+    (state) => state.setEmphasizedMemberCode
+  );
   const { currentCup, currentRound, currentBlock } = useSelectorState((state) =>
     state.getSelectorData()
   );
@@ -43,12 +46,18 @@ const RoundLeaderboard = () => {
         <CardTitle>Leaderboard</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col">
           {memberResults.map((memberResult) => {
             return (
               <div
                 key={memberResult.member_code}
-                className="flex items-center hover:bg-slate-100 py-1 px-4 rounded"
+                className="flex items-center hover:bg-slate-100 py-2 px-4 rounded"
+                onMouseEnter={() => {
+                  setEmphasizedMember(memberResult.member_code);
+                }}
+                onMouseLeave={() => {
+                  setEmphasizedMember("");
+                }}
               >
                 <Avatar className="mr-2">
                   <AvatarImage

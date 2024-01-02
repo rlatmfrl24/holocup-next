@@ -17,6 +17,9 @@ const RoundChart = () => {
   const { currentCup, currentRound, currentBlock } = useSelectorState((state) =>
     state.getSelectorData()
   );
+  const emphasizeMemberCode = useSelectorState(
+    (state) => state.emphasizedMemberCode
+  );
   const memberData = useBaseData((state) => state.memberData);
   const [entries, setEntries] = useState<string[]>([]);
   const [chartData, setChartData] = useState<Object[]>([]);
@@ -52,6 +55,22 @@ const RoundChart = () => {
         </div>
       );
     }
+  };
+
+  const makeCustomizedLabel = (props: any) => {
+    const { x, y, stroke, value } = props;
+    return (
+      <text
+        x={x}
+        y={y}
+        dy={-10}
+        fill={stroke}
+        fontSize={20}
+        textAnchor="middle"
+      >
+        {value === 13 ? "실격" : value + "위"}
+      </text>
+    );
   };
 
   useEffect(() => {
@@ -122,15 +141,27 @@ const RoundChart = () => {
               domain={["dataMin", "dataMax"]}
               tick={false}
             />
-            {entries.map((member) => {
+            {entries.map((memberCode) => {
               return (
                 <Line
-                  key={member}
+                  className={`${
+                    emphasizeMemberCode !== "" &&
+                    emphasizeMemberCode !== memberCode
+                      ? "opacity-20"
+                      : ""
+                  }`}
+                  key={memberCode}
                   type="monotone"
-                  dataKey={member}
+                  dataKey={memberCode}
                   stroke={
-                    memberData.find((data) => data.id === member)
+                    memberData.find((data) => data.id === memberCode)
                       ?.color_primary ?? "red"
+                  }
+                  strokeWidth={emphasizeMemberCode === memberCode ? 4 : 2}
+                  label={
+                    emphasizeMemberCode === memberCode
+                      ? makeCustomizedLabel
+                      : ""
                   }
                 />
               );
