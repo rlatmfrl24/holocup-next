@@ -5,6 +5,8 @@ import CupSelector from "./components/cup_selector";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RoundSelector from "./components/round_selector";
 import { useState } from "react";
+import RoundChart from "./components/round_chart";
+import RoundLeaderboard from "./components/round_leaderboard";
 
 export default function Records() {
   const [tabValue, setTabValue] = useState("overview");
@@ -31,7 +33,12 @@ export default function Records() {
         <TabsContent value="overview">
           <Overview />
         </TabsContent>
-        <TabsContent value="rounds">Round</TabsContent>
+        <TabsContent value="rounds">
+          <div className="flex gap-2">
+            <RoundChart />
+            <RoundLeaderboard />
+          </div>
+        </TabsContent>
       </Tabs>
     </div>
   );

@@ -1,12 +1,12 @@
 "use client";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { useCurrentCup } from "../store";
+import { useSelectorState } from "../store";
 import CupOverview from "./cup_overview";
 import EtcOverview from "./etc_overview";
 
 const Overview = () => {
-  const currentCup = useCurrentCup((state) => state.currentCup);
+  const currentCup = useSelectorState((state) => state.currentCup);
 
   return currentCup ? (
     currentCup?.type === "NEWYEAR_CUP" ? (

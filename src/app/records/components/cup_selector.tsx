@@ -13,12 +13,12 @@ import { cn } from "@/lib/utils";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
-import { useCurrentCup } from "../store";
 import { useBaseData } from "@/lib/store";
+import { useSelectorState } from "../store";
 
 const CupSelector = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const currentCup = useCurrentCup();
+  const currentCup = useSelectorState();
   const cupList = useBaseData((state) => state.cupData).sort(
     (a, b) => b.year - a.year
   );

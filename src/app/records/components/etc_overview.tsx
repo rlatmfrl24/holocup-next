@@ -1,14 +1,14 @@
 "use client";
 
 import { useBaseData } from "@/lib/store";
-import { useCurrentCup } from "../store";
+import { useSelectorState } from "../store";
 import { Label } from "@radix-ui/react-label";
 import { convertMemberCodeToName, makeETCOverviewData } from "../utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 export default function EtcOverview() {
-  const currentCup = useCurrentCup((state) => state.currentCup);
+  const currentCup = useSelectorState((state) => state.currentCup);
   const roundData = useBaseData((state) => state.roundData);
   const memberData = useBaseData((state) => state.memberData);
 

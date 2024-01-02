@@ -7,16 +7,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useCurrentCup } from "../store";
+import { useSelectorState } from "../store";
 import { useBaseData } from "@/lib/store";
 import { useEffect } from "react";
 
 const RoundSelector = () => {
-  const currentCup = useCurrentCup((state) => state.currentCup);
-  const currentRound = useCurrentCup((state) => state.currentRound);
-  const setCurrentRound = useCurrentCup((state) => state.setCurrentRound);
-  const currentBlock = useCurrentCup((state) => state.currentBlock);
-  const setCurrentBlock = useCurrentCup((state) => state.setCurrentBlock);
+  const currentCup = useSelectorState((state) => state.currentCup);
+  const currentRound = useSelectorState((state) => state.currentRound);
+  const setCurrentRound = useSelectorState((state) => state.setCurrentRound);
+  const currentBlock = useSelectorState((state) => state.currentBlock);
+  const setCurrentBlock = useSelectorState((state) => state.setCurrentBlock);
 
   const roundList = useBaseData((state) => state.roundData)
     .filter(
@@ -64,12 +64,27 @@ const RoundSelector = () => {
         return "본선";
       case "JAKOCUP":
         return "자코컵";
+      case "SUFFLE":
+        return "셔플 라운드";
+      case "EN_VS_ID":
+        return "EN vs ID 라운드";
+      case "ALL_STAR":
+        return "올스타전";
       default:
         if (code.startsWith("BLOCK")) {
           return "블록 " + code.slice(6);
         }
+        if (code.startsWith("TEAM_ROUND")) {
+          return "팀 라운드 " + code.slice(11);
+        }
+        if (code.startsWith("TRIO_ROUND")) {
+          return "트리오 라운드 " + code.slice(11);
+        }
+        if (code.startsWith("SOLO_ROUND")) {
+          return "솔로 라운드 " + code.slice(11);
+        }
 
-        return "";
+        return "라운드명 없음";
     }
   }
 
@@ -94,12 +109,12 @@ const RoundSelector = () => {
           </SelectContent>
         </Select>
       )}
-      {currentRound === "TRYOUT" && (
+      {blockList.length > 1 && (
         <Select
           onValueChange={(value) => setCurrentBlock(value)}
           value={currentBlock ?? ""}
         >
-          <SelectTrigger className="w-32 ml-2">
+          <SelectTrigger className="w-40 ml-2">
             <SelectValue placeholder="Select Round.." />
           </SelectTrigger>
           <SelectContent>

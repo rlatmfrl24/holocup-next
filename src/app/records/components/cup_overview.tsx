@@ -1,7 +1,7 @@
 "use client";
 
 import { useBaseData } from "@/lib/store";
-import { useCurrentCup } from "../store";
+import { useSelectorState } from "../store";
 import { convertMemberCodeToName, makeCupOverviewData } from "../utils";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -10,7 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import MemberFrameCard from "./member_frame_card";
 
 export default function CupOverview() {
-  const currentCup = useCurrentCup((state) => state.currentCup);
+  const currentCup = useSelectorState((state) => state.currentCup);
   const roundData = useBaseData((state) => state.roundData);
   const memberData = useBaseData((state) => state.memberData);
 
