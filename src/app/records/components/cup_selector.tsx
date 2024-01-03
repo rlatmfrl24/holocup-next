@@ -29,7 +29,7 @@ const CupSelector = () => {
         <Button
           variant="outline"
           role="combobox"
-          className="w-80 justify-between"
+          className="w-80 justify-between font-notoSans"
         >
           {currentCup.currentCup
             ? cupList.find((cup) => cup.code === currentCup.currentCup?.code)
@@ -38,7 +38,7 @@ const CupSelector = () => {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80">
+      <PopoverContent className="w-80 font-notoSans">
         <Command>
           <CommandInput placeholder="찾으시는 대회명을 입력해주세요" />
           <CommandEmpty>해당하는 대회가 없습니다.</CommandEmpty>

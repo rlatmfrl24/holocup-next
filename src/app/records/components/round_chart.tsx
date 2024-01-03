@@ -27,7 +27,7 @@ const RoundChart = () => {
   const makeTooltipContent = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-gray-50 p-3 shadow-lg flex flex-col rounded">
+        <div className="bg-gray-50 p-3 shadow-lg flex flex-col rounded font-notoSans">
           <p className="font-poppins text-lg font-semibold border-b mb-2">
             {"Race " + (label + 1)}
           </p>
@@ -43,6 +43,7 @@ const RoundChart = () => {
                     style={{
                       color: member?.color_primary,
                     }}
+                    className="font-semibold"
                   >
                     {member?.oshi_mark + ` ` + member?.name_kr}
                   </span>

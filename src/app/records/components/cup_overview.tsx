@@ -21,7 +21,7 @@ export default function CupOverview() {
 
   return (
     cupOverviewData && (
-      <div className="flex flex-col gap-3 py-6">
+      <div className="flex flex-col gap-3 py-6 font-notoSans">
         <Label className="text-2xl font-semibold ">주요 수상자</Label>
         <div className="grid grid-cols-5 gap-2">
           <MemberFrameCard
@@ -128,7 +128,9 @@ export default function CupOverview() {
                           key={member.member_code}
                           className="flex items-center gap-2"
                         >
-                          <span className="font-semibold">{index + 1}위</span>
+                          <span className="font-semibold w-12 text-center">
+                            {index + 1}위
+                          </span>
                           <Avatar>
                             <AvatarImage
                               src={`/members/` + member.member_code + `.png`}

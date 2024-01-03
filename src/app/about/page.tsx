@@ -14,7 +14,7 @@ export default function About() {
   ];
 
   return (
-    <div className="p-4 flex-1">
+    <div className="p-4 flex-1 container">
       <h1 className="text-4xl font-extrabold">About</h1>
       <p className="flex flex-col my-2">
         <span>이 페이지는 홀로라이브와 관련없는 팬페이지입니다.</span>

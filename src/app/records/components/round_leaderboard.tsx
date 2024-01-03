@@ -41,7 +41,7 @@ const RoundLeaderboard = () => {
     .sort((a, b) => b.member_point - a.member_point);
 
   return (
-    <Card className="mb-4">
+    <Card className="mb-4 font-notoSans">
       <CardHeader>
         <CardTitle>Leaderboard</CardTitle>
       </CardHeader>
@@ -66,7 +66,7 @@ const RoundLeaderboard = () => {
                   />
                 </Avatar>
                 <p className="flex flex-col flex-1 mr-10">
-                  <span>
+                  <span className="font-semibold">
                     {memberData.find(
                       (memberInfo) => memberInfo.id === memberResult.member_code
                     )?.name_kr ?? ""}
@@ -75,7 +75,7 @@ const RoundLeaderboard = () => {
                     {convertMemberCodeToName(memberResult.member_code)}
                   </span>
                 </p>
-                <span>{memberResult.member_point}점</span>
+                <span className="font-bold">{memberResult.member_point}점</span>
               </div>
             );
           })}

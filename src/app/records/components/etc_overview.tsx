@@ -16,7 +16,7 @@ export default function EtcOverview() {
   const overviewData = currentCup && makeETCOverviewData(currentCup, roundData);
 
   return (
-    <div className="flex flex-col gap-3 py-6">
+    <div className="flex flex-col gap-3 py-6 font-notoSans">
       <Label className="text-2xl font-semibold ">주요 성적</Label>
       <div className="grid grid-cols-1 gap-2 xl:grid-cols-4 md:grid-cols-2">
         <Card>

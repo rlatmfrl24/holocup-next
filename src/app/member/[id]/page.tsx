@@ -75,18 +75,18 @@ const MemberPage = () => {
           height={150}
           alt="Avatar"
         />
-        <p className="flex flex-col">
+        <p className="flex flex-col font-notoSans">
           <span className="text-2xl font-bold">
             {memberData.find((member) => member.id === id)?.name_kr}
           </span>
           <span className="text-lg">{convertMemberCodeToName(id)}</span>
-          <span className="mt-3">랭킹 포인트</span>
+          <span className="mt-3 text-sm">랭킹 포인트</span>
           <span className="text-3xl font-bold">{rankingPoint}</span>
         </p>
       </div>
       <Separator />
       <h2 className="text-2xl font-bold my-4">주요 성적</h2>
-      <Table className="mb-4">
+      <Table className="mb-4 font-notoSans">
         <TableHeader>
           <TableRow>
             <TableHead>대회</TableHead>
@@ -115,7 +115,7 @@ const MemberPage = () => {
                     return (
                       <span
                         key={idx}
-                        className="bg-slate-300 w-8 h-8 flex items-center justify-center rounded-sm"
+                        className="bg-slate-300 w-8 h-8 flex items-center justify-center rounded-sm font-bold"
                       >
                         {rank}
                       </span>

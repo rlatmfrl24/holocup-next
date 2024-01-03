@@ -1,7 +1,7 @@
 import "./globals.css";
 import Header from "@/components/header";
 import type { Metadata } from "next";
-import { Inter, Roboto, Noto_Sans } from "next/font/google";
+import { Inter, Roboto, Noto_Sans_KR } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Separator } from "@/components/ui/separator";
 import clientPromise from "@/lib/mongodb";
@@ -14,7 +14,7 @@ export const roboto = Roboto({
   variable: "--font-roboto",
   weight: ["100", "300", "400", "500", "700", "900"],
 });
-export const notoSans = Noto_Sans({
+export const notoSans = Noto_Sans_KR({
   subsets: ["latin"],
   variable: "--font-noto-sans",
   weight: ["100", "300", "400", "500", "700", "900"],

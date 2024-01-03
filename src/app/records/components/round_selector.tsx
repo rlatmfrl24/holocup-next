@@ -64,10 +64,10 @@ const RoundSelector = () => {
           onValueChange={(value) => setCurrentRound(value)}
           value={currentRound ?? ""}
         >
-          <SelectTrigger className="w-32 ml-2">
+          <SelectTrigger className="w-32 ml-2 font-notoSans">
             <SelectValue placeholder="Select Round.." />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="font-notoSans">
             {roundList.map((round) => {
               return (
                 <SelectItem key={round} value={round}>
@@ -83,10 +83,10 @@ const RoundSelector = () => {
           onValueChange={(value) => setCurrentBlock(value)}
           value={currentBlock ?? ""}
         >
-          <SelectTrigger className="w-40 ml-2">
+          <SelectTrigger className="w-40 ml-2 font-notoSans">
             <SelectValue placeholder="Select Round.." />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="font-notoSans">
             {blockList.map((block) => {
               return (
                 <SelectItem key={block} value={block}>

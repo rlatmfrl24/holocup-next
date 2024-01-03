@@ -12,7 +12,6 @@ import { useBaseData } from "@/lib/store";
 import { calculateRankingPoint } from "./util";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { convertMemberCodeToName } from "@/lib/utils";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const Leaderboard = () => {
@@ -41,7 +40,7 @@ const Leaderboard = () => {
   return (
     <div className="p-4 flex-1 container mx-auto">
       <h1 className="text-4xl font-extrabold mb-3">Leaderboard</h1>
-      <Table className="mb-4">
+      <Table className="mb-4 font-notoSans">
         <TableHeader>
           <TableRow>
             <TableHead className="w-28 text-center">Rank</TableHead>
