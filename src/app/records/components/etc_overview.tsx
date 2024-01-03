@@ -51,7 +51,7 @@ export default function EtcOverview() {
                         (memberInfo) => memberInfo.id === data.member_code
                       )?.name_kr ?? ""}
                     </Label>
-                    <Label className="ml-2">
+                    <Label className="ml-2 text-xs font-normal">
                       {convertMemberCodeToName(data.member_code)}
                     </Label>
                   </p>
@@ -94,7 +94,7 @@ export default function EtcOverview() {
                         (memberInfo) => memberInfo.id === data.member_code
                       )?.name_kr ?? ""}
                     </Label>
-                    <Label className="ml-2">
+                    <Label className="ml-2 text-xs font-normal">
                       {convertMemberCodeToName(data.member_code)}
                     </Label>
                   </p>
@@ -132,12 +132,12 @@ export default function EtcOverview() {
                     />
                   </Avatar>
                   <p className="flex flex-1 flex-col">
-                    <Label className="ml-2">
+                    <span className="ml-2 ">
                       {memberData.find(
                         (memberInfo) => memberInfo.id === data.member_code
                       )?.name_kr ?? ""}
-                    </Label>
-                    <Label className="ml-2">
+                    </span>
+                    <Label className="ml-2 text-xs font-normal">
                       {convertMemberCodeToName(data.member_code)}
                     </Label>
                   </p>{" "}
@@ -180,7 +180,7 @@ export default function EtcOverview() {
                         (memberInfo) => memberInfo.id === data.member_code
                       )?.name_kr ?? ""}
                     </Label>
-                    <Label className="ml-2">
+                    <Label className="ml-2 text-xs font-normal">
                       {convertMemberCodeToName(data.member_code)}
                     </Label>
                   </p>{" "}

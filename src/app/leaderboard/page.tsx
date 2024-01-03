@@ -12,10 +12,14 @@ import { useBaseData } from "@/lib/store";
 import { calculateRankingPoint } from "./util";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { convertMemberCodeToName } from "@/lib/utils";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Leaderboard = () => {
   const roundData = useBaseData((state) => state.roundData);
   const memberData = useBaseData((state) => state.memberData);
+
+  const router = useRouter();
 
   const rankingData = memberData
     .map((member) => {
@@ -48,7 +52,13 @@ const Leaderboard = () => {
         <TableBody>
           {rankingData.map((member, index) => {
             return (
-              <TableRow key={member.member_code}>
+              <TableRow
+                key={member.member_code}
+                onClick={() => {
+                  router.push(`/member/${member.member_code}`);
+                }}
+                className="cursor-pointer hover:bg-gray-100"
+              >
                 <TableCell className="text-center">{index + 1}</TableCell>
                 <TableCell className="flex gap-3 items-center">
                   <Avatar className="mr-2">
@@ -68,7 +78,7 @@ const Leaderboard = () => {
                     </span>
                   </p>
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell className="text-right text-xl font-semibold">
                   {member.member_ranking_point.toFixed(2)}
                 </TableCell>
               </TableRow>

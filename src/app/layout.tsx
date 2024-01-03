@@ -1,13 +1,24 @@
 import "./globals.css";
 import Header from "@/components/header";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Roboto, Noto_Sans } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Separator } from "@/components/ui/separator";
 import clientPromise from "@/lib/mongodb";
 import { CupInfoType, MemberType, RoundType } from "@/lib/typeDef";
+import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
+export const roboto = Roboto({
+  subsets: ["latin"],
+  variable: "--font-roboto",
+  weight: ["100", "300", "400", "500", "700", "900"],
+});
+export const notoSans = Noto_Sans({
+  subsets: ["latin"],
+  variable: "--font-noto-sans",
+  weight: ["100", "300", "400", "500", "700", "900"],
+});
 
 export const metadata: Metadata = {
   title: "Hololive MarioKart DB",
@@ -23,7 +34,13 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className + ` h-screen w-full flex flex-col`}>
+      <body
+        className={cn(
+          "h-screen w-full flex flex-col font-roboto",
+          roboto.variable,
+          notoSans.variable
+        )}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

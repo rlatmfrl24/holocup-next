@@ -10,6 +10,7 @@ import {
 import { useSelectorState } from "../store";
 import { useBaseData } from "@/lib/store";
 import { useEffect } from "react";
+import { getNameFromCode } from "../utils";
 
 const RoundSelector = () => {
   const currentCup = useSelectorState((state) => state.currentCup);
@@ -55,38 +56,6 @@ const RoundSelector = () => {
       setCurrentBlock(blockList[0]);
     }
   }, [currentCup, currentRound, currentBlock, blockList, setCurrentBlock]);
-
-  function getNameFromCode(code: string) {
-    switch (code) {
-      case "TRYOUT":
-        return "예선";
-      case "CHAMPIONSHIP":
-        return "본선";
-      case "JAKOCUP":
-        return "자코컵";
-      case "SUFFLE":
-        return "셔플 라운드";
-      case "EN_VS_ID":
-        return "EN vs ID 라운드";
-      case "ALL_STAR":
-        return "올스타전";
-      default:
-        if (code.startsWith("BLOCK")) {
-          return "블록 " + code.slice(6);
-        }
-        if (code.startsWith("TEAM_ROUND")) {
-          return "팀 라운드 " + code.slice(11);
-        }
-        if (code.startsWith("TRIO_ROUND")) {
-          return "트리오 라운드 " + code.slice(11);
-        }
-        if (code.startsWith("SOLO_ROUND")) {
-          return "솔로 라운드 " + code.slice(11);
-        }
-
-        return "라운드명 없음";
-    }
-  }
 
   return (
     <>

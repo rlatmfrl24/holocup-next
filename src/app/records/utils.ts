@@ -206,4 +206,41 @@ function makeETCOverviewData(cupInfo: CupInfoType, data: RoundType[]) {
   };
 }
 
-export { makeCupOverviewData, makeETCOverviewData };
+function getNameFromCode(code: string) {
+  switch (code) {
+    case "NEWYEAR_CUP":
+      return "정월컵";
+    case "ENIDTNMT":
+      return "EN ID 토너먼트";
+    case "YURUHOLO":
+      return "유루홀로";
+    case "TRYOUT":
+      return "예선";
+    case "CHAMPIONSHIP":
+      return "본선";
+    case "JAKOCUP":
+      return "자코컵";
+    case "SUFFLE":
+      return "셔플 라운드";
+    case "EN_VS_ID":
+      return "EN vs ID 라운드";
+    case "ALL_STAR":
+      return "올스타전";
+    default:
+      if (code.startsWith("BLOCK")) {
+        return "블록 " + code.slice(6);
+      }
+      if (code.startsWith("TEAM_ROUND")) {
+        return "팀 라운드 " + code.slice(11);
+      }
+      if (code.startsWith("TRIO_ROUND")) {
+        return "트리오 라운드 " + code.slice(11);
+      }
+      if (code.startsWith("SOLO_ROUND")) {
+        return "솔로 라운드 " + code.slice(11);
+      }
+      return "기타";
+  }
+}
+
+export { makeCupOverviewData, makeETCOverviewData, getNameFromCode };

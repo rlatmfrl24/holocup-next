@@ -163,6 +163,7 @@ const RoundChart = () => {
                       ? makeCustomizedLabel
                       : ""
                   }
+                  isAnimationActive={false}
                 />
               );
             })}

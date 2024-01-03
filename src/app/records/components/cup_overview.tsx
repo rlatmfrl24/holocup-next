@@ -128,7 +128,7 @@ export default function CupOverview() {
                           key={member.member_code}
                           className="flex items-center gap-2"
                         >
-                          <Label className="font-semibold">{index + 1}위</Label>
+                          <span className="font-semibold">{index + 1}위</span>
                           <Avatar>
                             <AvatarImage
                               src={`/members/` + member.member_code + `.png`}
@@ -136,15 +136,15 @@ export default function CupOverview() {
                             />
                           </Avatar>
                           <p className="flex flex-col">
-                            <Label className="ml-2">
+                            <span className="ml-2 font-bold text-base">
                               {memberData.find(
                                 (memberInfo) =>
                                   memberInfo.id === member.member_code
                               )?.name_kr ?? ""}
-                            </Label>
-                            <Label className="ml-2">
+                            </span>
+                            <span className="ml-2 text-xs font-normal">
                               {convertMemberCodeToName(member.member_code)}
-                            </Label>
+                            </span>
                           </p>
                         </div>
                       );
