@@ -23,7 +23,9 @@ import { Separator } from "@/components/ui/separator";
 const MemberPage = () => {
   const { id } = useParams<{ id: string }>();
   const memberData = useBaseData((state) => state.memberData);
-  const roundData = useBaseData((state) => state.roundData);
+  const roundData = useBaseData((state) => state.roundData).filter(
+    (round) => round.race_results !== undefined
+  );
 
   const allRoundData = roundData.filter((round) => {
     return round.member_code === id;
@@ -85,7 +87,7 @@ const MemberPage = () => {
         </p>
       </div>
       <Separator />
-      <h2 className="text-2xl font-bold my-4">주요 성적</h2>
+      <h2 className="text-2xl font-bold my-4 font-notoSans">주요 성적</h2>
       <Table className="mb-4 font-notoSans">
         <TableHeader>
           <TableRow>
