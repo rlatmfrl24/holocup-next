@@ -1,44 +1,53 @@
-"use client";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Entry from "./entry";
+import Prediction from "./prediction/prediction";
+import clientPromise from "@/lib/mongodb";
+import { PredictionType } from "@/lib/typeDef";
 
-import { useBaseData } from "@/lib/store";
-import { makeCupOverviewData } from "../records/utils";
-import { sumRacePoints } from "@/lib/utils";
+async function getPredictionDataFromDB() {
+  const client = await clientPromise;
+  const db = client.db("holocup_next");
+  const predictionData = db.collection("prediction");
+  const predictionDataList = await predictionData.find({}).toArray();
 
-type MemberResult = {
-  member_code: string;
-  point: number;
-  races: number[];
-};
-
-export default function NewYearCup2024() {
-  const roundData = useBaseData((state) => state.roundData).filter(
-    (round) => round.cup_code === "NEWYEAR_CUP" && round.year === 2024
+  const predictionList: PredictionType[] = predictionDataList.map(
+    (prediction) => {
+      return {
+        userId: prediction.userId as string,
+        userPwd: prediction.userPwd as string,
+        winner: prediction.winner as string,
+        runnerUp: prediction.runnerUp as string,
+        third: prediction.third as string,
+        jakoWinner: prediction.jakoWinner as string,
+        jako: prediction.jako as string,
+        championship: prediction.championship as string[],
+        jakocup: prediction.jakocup as string[],
+        createdAt: prediction.createdAt as Date,
+      };
+    }
   );
 
-  const blockGroups = roundData
-    .filter((round) => round.round_code === "TRYOUT")
-    // grouped  member data by block_code
-    .reduce((acc, cur) => {
-      const block_code = cur.block_code;
-      if (acc[block_code]) {
-        acc[block_code].push({
-          member_code: cur.member_code,
-        } as MemberResult);
-      } else {
-        acc[block_code] = [
-          {
-            member_code: cur.member_code,
-          } as MemberResult,
-        ];
-      }
-      return acc;
-    }, {} as { [key: string]: MemberResult[] });
+  return predictionList;
+}
 
-  console.log(blockGroups);
+export default async function NewYearCup2024() {
+  const predictionData = await getPredictionDataFromDB();
 
   return (
     <div className="p-4 flex-1 container">
       <h1 className="text-4xl font-extrabold">New Year Cup 2024</h1>
+      <Tabs defaultValue="entry" className="mt-4">
+        <TabsList className="font-notoSans">
+          <TabsTrigger value="entry">참가 멤버</TabsTrigger>
+          {/* <TabsTrigger value="prediction">승부 예측</TabsTrigger> */}
+        </TabsList>
+        <TabsContent value="entry">
+          <Entry />
+        </TabsContent>
+        <TabsContent value="prediction">
+          <Prediction predictionData={predictionData} />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

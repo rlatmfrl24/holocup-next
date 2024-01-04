@@ -1,4 +1,4 @@
-import { MongoClient, ObjectId } from "mongodb";
+import { MongoClient, ObjectId, Timestamp } from "mongodb";
 
 declare global {
   var _mongoClientPromise: Promise<MongoClient>;
@@ -29,4 +29,17 @@ export type RoundType = {
   block_code: string;
   member_code: string;
   race_results: number[];
+};
+
+export type PredictionType = {
+  userId: string;
+  userPwd: string;
+  winner: string;
+  runnerUp: string;
+  third: string;
+  jakoWinner: string;
+  jako: string;
+  championship: string[];
+  jakocup: string[];
+  createdAt: Date;
 };

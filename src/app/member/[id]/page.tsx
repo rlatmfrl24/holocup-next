@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon } from "lucide-react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useBaseData } from "@/lib/store";
 import { convertMemberCodeToName, sumRacePoints } from "@/lib/utils";
 import { calculateRankingPoint } from "@/app/leaderboard/util";
@@ -31,6 +31,7 @@ const MemberPage = () => {
     return round.member_code === id;
   });
   const rankingPoint = calculateRankingPoint(allRoundData);
+  const router = useRouter();
 
   function getRank(currentRound: RoundType) {
     // 1. filter roundData by roundType
@@ -64,12 +65,15 @@ const MemberPage = () => {
 
   return (
     <div className="p-4 flex-1 container mx-auto">
-      <Link href="/leaderboard">
-        <Button className="gap-2">
-          <ArrowLeftIcon className="w-4 h-4" />
-          <span>Back</span>
-        </Button>
-      </Link>
+      <Button
+        className="gap-2"
+        onClick={() => {
+          router.back();
+        }}
+      >
+        <ArrowLeftIcon className="w-4 h-4" />
+        <span>Back</span>
+      </Button>
       <div className="flex gap-4 my-4 items-center">
         <Image
           src={`/members/${id}.png`}
@@ -103,14 +107,16 @@ const MemberPage = () => {
           {allRoundData.map((round, index) => {
             return (
               <TableRow key={index}>
-                <TableCell>
+                <TableCell className="font-semibold">
                   {getNameFromCode(round.cup_code) + ` ` + round.year}
                 </TableCell>
                 <TableCell>{getNameFromCode(round.round_code)}</TableCell>
                 <TableCell>
                   {round.block_code ? getNameFromCode(round.block_code) : `-`}
                 </TableCell>
-                <TableCell>{getRank(round)}위</TableCell>
+                <TableCell className="font-semibold text-lg">
+                  {getRank(round)}위
+                </TableCell>
                 <TableCell>{sumRacePoints(round.race_results)}점</TableCell>
                 <TableCell className="flex gap-2">
                   {round.race_results.map((rank, idx) => {
