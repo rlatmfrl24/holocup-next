@@ -9,11 +9,14 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import MemberFrameCard from "./member_frame_card";
 import { convertMemberCodeToName } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 export default function CupOverview() {
   const currentCup = useSelectorState((state) => state.currentCup);
   const roundData = useBaseData((state) => state.roundData);
   const memberData = useBaseData((state) => state.memberData);
+
+  const router = useRouter();
 
   const cupOverviewData = currentCup
     ? makeCupOverviewData(currentCup, roundData)
@@ -126,7 +129,10 @@ export default function CupOverview() {
                       return (
                         <div
                           key={member.member_code}
-                          className="flex items-center gap-2"
+                          className="flex items-center gap-2 hover:bg-zinc-100 p-2 rounded-md cursor-pointer"
+                          onClick={() => {
+                            router.push("/member/" + member.member_code);
+                          }}
                         >
                           <span className="font-semibold w-12 text-center">
                             {index + 1}위

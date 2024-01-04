@@ -2,6 +2,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { NextPage } from "next";
 import Image from "next/image";
 import { Label } from "@/components/ui/label";
+import { useRouter } from "next/navigation";
 
 const MemberFrameCard: NextPage<{
   code: string;
@@ -9,8 +10,15 @@ const MemberFrameCard: NextPage<{
   name_en: string;
   title?: string;
 }> = ({ code, name_kr, name_en, title }) => {
+  const router = useRouter();
+
   return (
-    <Card className="flex-1">
+    <Card
+      className="flex-1 cursor-pointer hover:bg-zinc-100"
+      onClick={() => {
+        router.push("/member/" + code);
+      }}
+    >
       <CardHeader>
         <CardTitle className="text-center">{title ? title : name_kr}</CardTitle>
       </CardHeader>
