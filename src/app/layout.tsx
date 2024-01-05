@@ -8,13 +8,12 @@ import clientPromise from "@/lib/mongodb";
 import { CupInfoType, MemberType, RoundType } from "@/lib/typeDef";
 import { cn } from "@/lib/utils";
 
-// const inter = Inter({ subsets: ["latin"] });
-export const roboto = Roboto({
+const roboto = Roboto({
   subsets: ["latin"],
   variable: "--font-roboto",
   weight: ["100", "300", "400", "500", "700", "900"],
 });
-export const notoSans = Noto_Sans_KR({
+const notoSans = Noto_Sans_KR({
   subsets: ["latin"],
   variable: "--font-noto-sans",
   weight: ["100", "300", "400", "500", "700", "900"],
@@ -36,7 +35,7 @@ export default async function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "h-screen w-full flex flex-col font-roboto",
+          "h-screen w-full flex flex-col ",
           roboto.variable,
           notoSans.variable
         )}
