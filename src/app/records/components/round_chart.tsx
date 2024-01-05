@@ -1,6 +1,5 @@
 import { useBaseData } from "@/lib/store";
 import {
-  CartesianGrid,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -32,26 +31,30 @@ const RoundChart = () => {
             {"Race " + (label + 1)}
           </p>
           <div className="flex flex-col gap-1">
-            {payload.map((data: any) => {
-              const member = memberData.find((member) => {
-                return member.id === data.name;
-              });
+            {payload
+              .sort((a: any, b: any) => {
+                return a.value - b.value;
+              })
+              .map((data: any) => {
+                const member = memberData.find((member) => {
+                  return member.id === data.name;
+                });
 
-              return (
-                <p key={data.name} className="flex font-noto_kr">
-                  <span
-                    style={{
-                      color: member?.color_primary,
-                    }}
-                    className="font-semibold"
-                  >
-                    {member?.oshi_mark + ` ` + member?.name_kr}
-                  </span>
-                  <span className="flex-1 px-5"></span>
-                  {data.value === 13 ? "실격" : data.value + `위`}
-                </p>
-              );
-            })}
+                return (
+                  <p key={data.name} className="flex font-noto_kr">
+                    <span
+                      style={{
+                        color: member?.color_primary,
+                      }}
+                      className="font-semibold"
+                    >
+                      {member?.oshi_mark + ` ` + member?.name_kr}
+                    </span>
+                    <span className="flex-1 px-5"></span>
+                    {data.value === 13 ? "실격" : data.value + `위`}
+                  </p>
+                );
+              })}
           </div>
         </div>
       );
