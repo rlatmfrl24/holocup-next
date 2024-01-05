@@ -1,6 +1,7 @@
 "use client";
 
 import { getNameFromCode } from "@/app/records/utils";
+import { Alert, AlertTitle } from "@/components/ui/alert";
 import {
   Select,
   SelectContent,
@@ -84,6 +85,11 @@ const ResultPage = () => {
           </Select>
         )}
       </div>
+      <Alert className="mt-4">
+        <AlertTitle className="font-bold font-notoSans">
+          현재 이 페이지는 준비중입니다.
+        </AlertTitle>
+      </Alert>
     </div>
   );
 };
