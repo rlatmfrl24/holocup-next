@@ -216,8 +216,10 @@ function getNameFromCode(code: string) {
       return "유루홀로";
     case "TRYOUT":
       return "예선";
+    case "GROUP_STAGE":
+      return "그룹 스테이지";
     case "CHAMPIONSHIP":
-      return "본선";
+      return "결승";
     case "JAKOCUP":
       return "자코컵";
     case "SUFFLE":

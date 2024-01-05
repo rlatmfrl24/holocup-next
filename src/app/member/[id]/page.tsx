@@ -87,7 +87,9 @@ const MemberPage = () => {
           </span>
           <span className="text-lg">{convertMemberCodeToName(id)}</span>
           <span className="mt-3 text-sm">랭킹 포인트</span>
-          <span className="text-3xl font-bold">{rankingPoint}</span>
+          <span className="text-3xl font-bold">
+            {Number.isNaN(rankingPoint) ? "-" : rankingPoint.toFixed(2)}
+          </span>
         </p>
       </div>
       <Separator />
@@ -104,43 +106,51 @@ const MemberPage = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {allRoundData.map((round, index) => {
-            return (
-              <TableRow key={index}>
-                <TableCell className="font-semibold">
-                  {getNameFromCode(round.cup_code) + ` ` + round.year}
-                </TableCell>
-                <TableCell>{getNameFromCode(round.round_code)}</TableCell>
-                <TableCell>
-                  {round.block_code ? getNameFromCode(round.block_code) : `-`}
-                </TableCell>
-                <TableCell className="font-semibold text-lg">
-                  {getRank(round)}위
-                </TableCell>
-                <TableCell>{sumRacePoints(round.race_results)}점</TableCell>
-                <TableCell className="flex gap-2">
-                  {round.race_results.map((rank, idx) => {
-                    return (
-                      <span
-                        key={idx}
-                        className={
-                          `w-8 h-8 flex items-center justify-center rounded-sm font-bold ` +
-                          (rank === 1 ? `bg-yellow-400 ` : ``) +
-                          (rank === 2 ? `bg-gray-400 ` : ``) +
-                          (rank === 3 ? `bg-yellow-700 ` : ``) +
-                          (rank > 3 ? `bg-slate-200 ` : ``) +
-                          (rank > 9 ? `bg-red-400 ` : ``) +
-                          (rank === -1 ? `bg-violet-400 ` : ``)
-                        }
-                      >
-                        {rank === -1 ? `DNF` : rank}
-                      </span>
-                    );
-                  })}
-                </TableCell>
-              </TableRow>
-            );
-          })}
+          {allRoundData.length > 0 ? (
+            allRoundData.map((round, index) => {
+              return (
+                <TableRow key={index}>
+                  <TableCell className="font-semibold">
+                    {getNameFromCode(round.cup_code) + ` ` + round.year}
+                  </TableCell>
+                  <TableCell>{getNameFromCode(round.round_code)}</TableCell>
+                  <TableCell>
+                    {round.block_code ? getNameFromCode(round.block_code) : `-`}
+                  </TableCell>
+                  <TableCell className="font-semibold text-lg">
+                    {getRank(round)}위
+                  </TableCell>
+                  <TableCell>{sumRacePoints(round.race_results)}점</TableCell>
+                  <TableCell className="flex gap-2">
+                    {round.race_results.map((rank, idx) => {
+                      return (
+                        <span
+                          key={idx}
+                          className={
+                            `w-8 h-8 flex items-center justify-center rounded-sm font-bold ` +
+                            (rank === 1 ? `bg-yellow-400 ` : ``) +
+                            (rank === 2 ? `bg-gray-400 ` : ``) +
+                            (rank === 3 ? `bg-yellow-700 ` : ``) +
+                            (rank > 3 ? `bg-slate-200 ` : ``) +
+                            (rank > 9 ? `bg-red-400 ` : ``) +
+                            (rank === -1 ? `bg-violet-400 ` : ``)
+                          }
+                        >
+                          {rank === -1 ? `DNF` : rank}
+                        </span>
+                      );
+                    })}
+                  </TableCell>
+                </TableRow>
+              );
+            })
+          ) : (
+            <TableRow>
+              <TableCell colSpan={6} className="text-center">
+                데이터가 없습니다.
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </div>

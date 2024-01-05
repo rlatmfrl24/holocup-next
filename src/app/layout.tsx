@@ -35,7 +35,7 @@ export default async function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "h-screen w-full flex flex-col font-roboto",
+          "h-screen w-full flex flex-col ",
           roboto.variable,
           notoSans.variable
         )}

@@ -3,6 +3,10 @@ import Entry from "./entry";
 import Prediction from "./prediction/prediction";
 import clientPromise from "@/lib/mongodb";
 import { PredictionType } from "@/lib/typeDef";
+import Preliminary from "./result/preliminary";
+import GroupStage from "./result/group_stage";
+import FinalRound from "./result/final";
+import ResultPage from "./result/result";
 
 async function getPredictionDataFromDB() {
   const client = await clientPromise;
@@ -39,10 +43,14 @@ export default async function NewYearCup2024() {
       <Tabs defaultValue="entry" className="mt-4">
         <TabsList className="font-notoSans">
           <TabsTrigger value="entry">참가 멤버</TabsTrigger>
+          <TabsTrigger value="result">대회 진행 결과</TabsTrigger>
           {/* <TabsTrigger value="prediction">승부 예측</TabsTrigger> */}
         </TabsList>
         <TabsContent value="entry">
           <Entry />
+        </TabsContent>
+        <TabsContent value="result">
+          <ResultPage />
         </TabsContent>
         <TabsContent value="prediction">
           <Prediction predictionData={predictionData} />
