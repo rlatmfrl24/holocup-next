@@ -2,37 +2,38 @@ import { RoundType } from "@/lib/typeDef";
 import { sumRacePoints } from "@/lib/utils";
 
 function calculateRankingPoint(roundDataList: RoundType[]) {
+  const decayFactor = 0.9; // Adjust the decay factor as needed
+  const competitionWeights: Record<string, number> = {
+    TRYOUT: 0.6,
+    JAKOCUP: 0.5,
+    CHAMPIONSHIP: 2.5,
+    ETC: 0.8,
+  };
+
+  const CurrentYear = new Date().getFullYear();
+
   const PointList = roundDataList
     .filter((roundData) => roundData.race_results !== undefined)
-    .map((roundData) => {
-      let modifiedPoint = sumRacePoints(roundData.race_results);
-      let threshold = 0;
-
-      if (roundData.round_code === "TRYOUT") {
-        threshold = 0.85;
-      } else if (roundData.round_code === "CHAMPIONSHIP") {
-        threshold = 2;
-      } else if (roundData.round_code === "JAKOCUP") {
-        threshold = 0.5;
-      } else {
-        threshold = 1;
-      }
-
-      modifiedPoint = modifiedPoint * threshold;
-
-      const currentYear = new Date().getFullYear();
-      threshold = 1 - Math.abs(currentYear - roundData.year) * 0.1;
-      modifiedPoint = modifiedPoint * threshold;
-
-      return modifiedPoint;
+    .map((roundData, index, array) => {
+      return {
+        point: sumRacePoints(roundData.race_results),
+        round_code: roundData.round_code,
+        year: roundData.year,
+        weight: competitionWeights[roundData.round_code],
+        decay: Math.pow(decayFactor, CurrentYear - roundData.year + 1),
+        weightMultiplier: 1 / array.length, // 각 라운드에 대한 공정한 가중치
+      };
     });
 
-  const sum = PointList.reduce((a, b) => a + b, 0);
-  const avg = sum / PointList.length;
+  // Calculate Overall Ranking Point
+  let overallRankingPoint = 0;
 
-  const roundedAvg = Math.round((avg + Number.EPSILON) * 100) / 100;
+  PointList.forEach((pointData) => {
+    const { point, weight, decay, weightMultiplier } = pointData;
+    overallRankingPoint += point * weight * decay * weightMultiplier;
+  });
 
-  return roundedAvg;
+  return overallRankingPoint;
 }
 
 export { calculateRankingPoint };

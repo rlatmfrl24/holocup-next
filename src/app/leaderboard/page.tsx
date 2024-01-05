@@ -25,6 +25,7 @@ const Leaderboard = () => {
       const allRoundData = roundData.filter((round) => {
         return round.member_code === member.id;
       });
+
       return {
         member_code: member.id,
         member_ranking_point: calculateRankingPoint(allRoundData),
