@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { RoundType } from "./typeDef";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
