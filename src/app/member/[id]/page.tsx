@@ -131,7 +131,7 @@ const MemberPage = () => {
                             (rank === 1 ? `bg-yellow-400 ` : ``) +
                             (rank === 2 ? `bg-gray-400 ` : ``) +
                             (rank === 3 ? `bg-yellow-700 ` : ``) +
-                            (rank > 3 ? `bg-slate-200 ` : ``) +
+                            (rank > 3 && rank <= 9 ? `bg-slate-200 ` : ``) +
                             (rank > 9 ? `bg-red-400 ` : ``) +
                             (rank === -1 ? `bg-violet-400 ` : ``)
                           }
