@@ -91,7 +91,7 @@ const RoundChart = () => {
     const chartData: Object[] = [];
 
     roundData.map((memberRaceData) => {
-      memberRaceData.race_results.map((raceResult, index) => {
+      memberRaceData.race_results?.map((raceResult, index) => {
         if (chartData[index]) {
           chartData[index] = {
             ...chartData[index],
