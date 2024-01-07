@@ -22,93 +22,96 @@ export default function CupOverview() {
     ? makeCupOverviewData(currentCup, roundData)
     : null;
 
+  console.log(cupOverviewData);
+
   return (
     cupOverviewData && (
       <div className="flex flex-col gap-3 py-6 font-notoSans">
         <Label className="text-2xl font-semibold ">주요 수상자</Label>
         <div className="grid grid-cols-5 gap-2">
-          <MemberFrameCard
-            title="우승"
-            code={cupOverviewData.champion.member_code ?? ""}
-            name_kr={
-              memberData.find(
-                (member) => member.id === cupOverviewData.champion.member_code
-              )?.name_kr ?? ""
-            }
-            name_en={convertMemberCodeToName(
-              cupOverviewData.champion.member_code
-            )}
-          />
-          <MemberFrameCard
-            title="준우승"
-            code={cupOverviewData.secondWinner.member_code ?? ""}
-            name_kr={
-              memberData.find(
-                (member) =>
-                  member.id === cupOverviewData.secondWinner.member_code
-              )?.name_kr ?? ""
-            }
-            name_en={convertMemberCodeToName(
-              cupOverviewData.secondWinner.member_code
-            )}
-          />
-          <MemberFrameCard
-            title="3위"
-            code={
-              cupOverviewData.thirdWinner.member_code
-                ? cupOverviewData.thirdWinner.member_code
-                : ""
-            }
-            name_kr={
-              memberData.find(
-                (member) =>
-                  member.id === cupOverviewData.thirdWinner.member_code
-              )?.name_kr ?? ""
-            }
-            name_en={
-              convertMemberCodeToName(
+          {cupOverviewData.champion ? (
+            <MemberFrameCard
+              title="우승"
+              code={cupOverviewData.champion.member_code ?? ""}
+              name_kr={
+                memberData.find(
+                  (member) => member.id === cupOverviewData.champion.member_code
+                )?.name_kr ?? ""
+              }
+              name_en={convertMemberCodeToName(
+                cupOverviewData.champion.member_code
+              )}
+            />
+          ) : null}
+          {cupOverviewData.secondWinner ? (
+            <MemberFrameCard
+              title="준우승"
+              code={cupOverviewData.secondWinner.member_code ?? ""}
+              name_kr={
+                memberData.find(
+                  (member) =>
+                    member.id === cupOverviewData.secondWinner.member_code
+                )?.name_kr ?? ""
+              }
+              name_en={convertMemberCodeToName(
+                cupOverviewData.secondWinner.member_code
+              )}
+            />
+          ) : null}
+
+          {cupOverviewData.thirdWinner ? (
+            <MemberFrameCard
+              title="3위"
+              code={cupOverviewData.thirdWinner.member_code ?? ""}
+              name_kr={
+                memberData.find(
+                  (member) =>
+                    member.id === cupOverviewData.thirdWinner.member_code
+                )?.name_kr ?? ""
+              }
+              name_en={convertMemberCodeToName(
                 cupOverviewData.thirdWinner.member_code
-              ) ?? ""
-            }
-          />
-          <MemberFrameCard
-            title="자코컵 우승"
-            code={
-              cupOverviewData.jakocupWinner.member_code
-                ? cupOverviewData.jakocupWinner.member_code
-                : ""
-            }
-            name_kr={
-              memberData.find(
-                (member) =>
-                  member.id === cupOverviewData.jakocupWinner.member_code
-              )?.name_kr ?? ""
-            }
-            name_en={
-              convertMemberCodeToName(
+              )}
+            />
+          ) : null}
+
+          {cupOverviewData.jakocupWinner ? (
+            <MemberFrameCard
+              title="자코컵 우승"
+              code={cupOverviewData.jakocupWinner.member_code ?? ""}
+              name_kr={
+                memberData.find(
+                  (member) =>
+                    member.id === cupOverviewData.jakocupWinner.member_code
+                )?.name_kr ?? ""
+              }
+              name_en={convertMemberCodeToName(
                 cupOverviewData.jakocupWinner.member_code
-              ) ?? ""
-            }
-          />
-          <MemberFrameCard
-            title="자코컵 최하위"
-            code={
-              cupOverviewData.jakocupLastOne.member_code
-                ? cupOverviewData.jakocupLastOne.member_code
-                : ""
-            }
-            name_kr={
-              memberData.find(
-                (member) =>
-                  member.id === cupOverviewData.jakocupLastOne.member_code
-              )?.name_kr ?? ""
-            }
-            name_en={
-              convertMemberCodeToName(
+              )}
+            />
+          ) : null}
+
+          {cupOverviewData.jakocupLastOne ? (
+            <MemberFrameCard
+              title="자코컵 최하위"
+              code={
                 cupOverviewData.jakocupLastOne.member_code
-              ) ?? ""
-            }
-          />
+                  ? cupOverviewData.jakocupLastOne.member_code
+                  : ""
+              }
+              name_kr={
+                memberData.find(
+                  (member) =>
+                    member.id === cupOverviewData.jakocupLastOne.member_code
+                )?.name_kr ?? ""
+              }
+              name_en={
+                convertMemberCodeToName(
+                  cupOverviewData.jakocupLastOne.member_code
+                ) ?? ""
+              }
+            />
+          ) : null}
         </div>
         <Label className="text-2xl font-semibold mt-3">
           참가 엔트리 및 결과
@@ -125,38 +128,42 @@ export default function CupOverview() {
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-col gap-2">
-                    {value.map((member, index) => {
-                      return (
-                        <div
-                          key={member.member_code}
-                          className="flex items-center gap-2 hover:bg-zinc-100 p-2 rounded-md cursor-pointer"
-                          onClick={() => {
-                            router.push("/member/" + member.member_code);
-                          }}
-                        >
-                          <span className="font-semibold w-12 text-center">
-                            {index + 1}위
-                          </span>
-                          <Avatar>
-                            <AvatarImage
-                              src={`/members/` + member.member_code + `.png`}
-                              alt={member.member_code}
-                            />
-                          </Avatar>
-                          <p className="flex flex-col">
-                            <span className="ml-2 font-bold text-base">
-                              {memberData.find(
-                                (memberInfo) =>
-                                  memberInfo.id === member.member_code
-                              )?.name_kr ?? ""}
+                    {value
+                      .sort((a, b) => {
+                        return b.point - a.point;
+                      })
+                      .map((member, index) => {
+                        return (
+                          <div
+                            key={member.member_code}
+                            className="flex items-center gap-2 hover:bg-zinc-100 p-2 rounded-md cursor-pointer"
+                            onClick={() => {
+                              router.push("/member/" + member.member_code);
+                            }}
+                          >
+                            <span className="font-semibold w-12 text-center">
+                              {index + 1}위
                             </span>
-                            <span className="ml-2 text-xs font-normal">
-                              {convertMemberCodeToName(member.member_code)}
-                            </span>
-                          </p>
-                        </div>
-                      );
-                    })}
+                            <Avatar>
+                              <AvatarImage
+                                src={`/members/` + member.member_code + `.png`}
+                                alt={member.member_code}
+                              />
+                            </Avatar>
+                            <p className="flex flex-col">
+                              <span className="ml-2 font-bold text-base">
+                                {memberData.find(
+                                  (memberInfo) =>
+                                    memberInfo.id === member.member_code
+                                )?.name_kr ?? ""}
+                              </span>
+                              <span className="ml-2 text-xs font-normal">
+                                {convertMemberCodeToName(member.member_code)}
+                              </span>
+                            </p>
+                          </div>
+                        );
+                      })}
                   </div>
                 </CardContent>
               </Card>

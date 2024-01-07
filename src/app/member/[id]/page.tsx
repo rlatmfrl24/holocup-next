@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon } from "lucide-react";
@@ -19,6 +18,7 @@ import {
 import { RoundType } from "@/lib/typeDef";
 import { getNameFromCode } from "@/app/records/utils";
 import { Separator } from "@/components/ui/separator";
+import RaceResults from "@/components/race_results";
 
 const MemberPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -122,24 +122,7 @@ const MemberPage = () => {
                   </TableCell>
                   <TableCell>{sumRacePoints(round.race_results)}점</TableCell>
                   <TableCell className="flex gap-2">
-                    {round.race_results.map((rank, idx) => {
-                      return (
-                        <span
-                          key={idx}
-                          className={
-                            `w-8 h-8 flex items-center justify-center rounded-sm font-bold ` +
-                            (rank === 1 ? `bg-yellow-400 ` : ``) +
-                            (rank === 2 ? `bg-gray-400 ` : ``) +
-                            (rank === 3 ? `bg-yellow-700 ` : ``) +
-                            (rank > 3 && rank <= 9 ? `bg-slate-200 ` : ``) +
-                            (rank > 9 ? `bg-red-400 ` : ``) +
-                            (rank === -1 ? `bg-violet-400 ` : ``)
-                          }
-                        >
-                          {rank === -1 ? `DNF` : rank}
-                        </span>
-                      );
-                    })}
+                    <RaceResults race_results={round.race_results} />
                   </TableCell>
                 </TableRow>
               );
