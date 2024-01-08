@@ -14,22 +14,6 @@ import { useBaseData } from "@/lib/store";
 import { RoundType } from "@/lib/typeDef";
 import { convertMemberCodeToName, sumRacePoints } from "@/lib/utils";
 
-function getTryoutScore(roundData: RoundType[], memberCode: string) {
-  const tryDataRounds = roundData.filter((round) => {
-    return (
-      round.round_code === "TRYOUT" &&
-      round.year === 2024 &&
-      round.cup_code === "NEWYEAR_CUP"
-    );
-  });
-
-  const memberTryoutRound = tryDataRounds.find((round) => {
-    return round.member_code === memberCode;
-  });
-
-  return sumRacePoints(memberTryoutRound!.race_results, tryDataRounds.length);
-}
-
 const GroupStage = ({ memberRoundData }: { memberRoundData: RoundType[] }) => {
   const memberData = useBaseData((state) => state.memberData);
   const roundData = useBaseData((state) => state.roundData);
@@ -43,6 +27,7 @@ const GroupStage = ({ memberRoundData }: { memberRoundData: RoundType[] }) => {
             <TableHead>멤버</TableHead>
             <TableHead>예선 성적</TableHead>
             <TableHead>레이스 결과</TableHead>
+            <TableHead>본선 성적</TableHead>
             <TableHead>총점</TableHead>
             <TableHead>결과</TableHead>
           </TableRow>
@@ -51,8 +36,10 @@ const GroupStage = ({ memberRoundData }: { memberRoundData: RoundType[] }) => {
           {memberRoundData
             .sort((a, b) => {
               return (
-                getTryoutScore(roundData, b.member_code) -
-                getTryoutScore(roundData, a.member_code)
+                getTryoutScore(roundData, b.member_code) +
+                sumRacePoints(b.race_results, memberRoundData.length) -
+                (getTryoutScore(roundData, a.member_code) +
+                  sumRacePoints(a.race_results, memberRoundData.length))
               );
             })
             .map((round, index) => {
@@ -87,12 +74,15 @@ const GroupStage = ({ memberRoundData }: { memberRoundData: RoundType[] }) => {
                       <RaceResults race_results={round.race_results} />
                     )}
                   </TableCell>
-                  <TableCell>{sumRacePoints(round.race_results)}</TableCell>
+                  <TableCell>
+                    {sumRacePoints(round.race_results, memberRoundData.length)}
+                  </TableCell>
+                  <TableCell className="items-center text-xl font-semibold">
+                    {getTryoutScore(roundData, round.member_code) +
+                      sumRacePoints(round.race_results, memberRoundData.length)}
+                  </TableCell>
                   <TableCell className="font-semibold">
-                    {round.race_results !== undefined &&
-                      {
-                        0: "결승 진출",
-                      }[index]}
+                    {getStatus(round.member_code, roundData)}
                   </TableCell>
                 </TableRow>
               );
@@ -102,5 +92,137 @@ const GroupStage = ({ memberRoundData }: { memberRoundData: RoundType[] }) => {
     </div>
   );
 };
+
+function getTryoutScore(roundData: RoundType[], memberCode: string) {
+  const memberBlockCode = roundData.find((round) => {
+    return (
+      round.round_code === "TRYOUT" &&
+      round.year === 2024 &&
+      round.cup_code === "NEWYEAR_CUP" &&
+      round.member_code === memberCode
+    );
+  })?.block_code;
+
+  const tryDataRounds = roundData.filter((round) => {
+    return (
+      round.round_code === "TRYOUT" &&
+      round.year === 2024 &&
+      round.cup_code === "NEWYEAR_CUP" &&
+      round.block_code === memberBlockCode
+    );
+  });
+
+  const memberTryoutRound = tryDataRounds.find((round) => {
+    return round.member_code === memberCode;
+  });
+
+  return sumRacePoints(memberTryoutRound!.race_results, tryDataRounds.length);
+}
+
+function getStatus(memberCode: string, wholeRounds: RoundType[]) {
+  const getGroupDData = wholeRounds.filter((round) => {
+    return (
+      round.round_code === "GROUP_STAGE" &&
+      round.year === 2024 &&
+      round.cup_code === "NEWYEAR_CUP" &&
+      round.block_code === "BLOCK_D"
+    );
+  });
+
+  const getGroupEData = wholeRounds.filter((round) => {
+    return (
+      round.round_code === "GROUP_STAGE" &&
+      round.year === 2024 &&
+      round.cup_code === "NEWYEAR_CUP" &&
+      round.block_code === "BLOCK_E"
+    );
+  });
+
+  const getGroupFData = wholeRounds.filter((round) => {
+    return (
+      round.round_code === "GROUP_STAGE" &&
+      round.year === 2024 &&
+      round.cup_code === "NEWYEAR_CUP" &&
+      round.block_code === "BLOCK_F"
+    );
+  });
+
+  const groupDFirst = getGroupDData.sort((a, b) => {
+    return (
+      sumRacePoints(b.race_results, getGroupDData.length) -
+      sumRacePoints(a.race_results, getGroupDData.length)
+    );
+  })[0].member_code;
+
+  const groupEFirst = getGroupEData.sort((a, b) => {
+    return (
+      sumRacePoints(b.race_results, getGroupEData.length) -
+      sumRacePoints(a.race_results, getGroupEData.length)
+    );
+  })[0].member_code;
+
+  const groupFFirst = getGroupFData.sort((a, b) => {
+    return (
+      sumRacePoints(b.race_results, getGroupFData.length) -
+      sumRacePoints(a.race_results, getGroupFData.length)
+    );
+  })[0].member_code;
+
+  const exceptFirstRounds = wholeRounds
+    .filter((round) => {
+      return (
+        round.round_code === "GROUP_STAGE" &&
+        round.year === 2024 &&
+        round.cup_code === "NEWYEAR_CUP"
+      );
+    })
+    .filter((round) => {
+      return (
+        round.member_code !== groupDFirst &&
+        round.member_code !== groupEFirst &&
+        round.member_code !== groupFFirst
+      );
+    });
+
+  const totalResult = exceptFirstRounds.map((round) => {
+    const groupMemberRounds = wholeRounds.filter((group) => {
+      return (
+        group.round_code === "GROUP_STAGE" &&
+        group.year === 2024 &&
+        group.cup_code === "NEWYEAR_CUP" &&
+        group.block_code === round.block_code
+      );
+    });
+
+    const groupScore = sumRacePoints(
+      round.race_results,
+      groupMemberRounds.length
+    );
+
+    return {
+      member: round.member_code,
+      tryoutScore: getTryoutScore(wholeRounds, round.member_code),
+      groupScore: groupScore,
+      totalScore: getTryoutScore(wholeRounds, round.member_code) + groupScore,
+    };
+  });
+
+  const sorted = totalResult.sort((a, b) => {
+    return b.tryoutScore + b.groupScore - (a.tryoutScore + a.groupScore);
+  });
+
+  //find member's index
+  const memberIndex = sorted.findIndex((result) => {
+    return result.member === memberCode;
+  });
+
+  if (memberIndex < 6) {
+    return "결승 진출";
+  } else if (memberIndex > totalResult.length - 12) {
+    return "자코컵 진출";
+  } else {
+    ("");
+  }
+}
 
 export default GroupStage;

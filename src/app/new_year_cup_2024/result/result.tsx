@@ -14,6 +14,8 @@ import { RoundType } from "@/lib/typeDef";
 import { useEffect, useState } from "react";
 import Preliminary from "./preliminary";
 import GroupStage from "./group_stage";
+import FinalRound from "./final";
+import Jakocup from "./jakocup";
 
 const RoundTree = {
   1: {
@@ -45,7 +47,7 @@ const ResultPage = () => {
   const [currentRoundData, setCurrentRoundData] = useState<RoundType[]>([]);
 
   useEffect(() => {
-    const currentRoundData = roundData
+    let currentRoundData = roundData
       .filter(
         (round) => round.year === 2024 && round.cup_code === "NEWYEAR_CUP"
       )
@@ -56,8 +58,6 @@ const ResultPage = () => {
       );
 
     setCurrentRoundData(currentRoundData);
-
-    console.log(currentRoundData);
   }, [roundData, roundSelection.block, roundSelection.round]);
 
   return (
@@ -124,8 +124,8 @@ const ResultPage = () => {
         {
           TRYOUT: <Preliminary roundData={currentRoundData} />,
           GROUP_STAGE: <GroupStage memberRoundData={currentRoundData} />,
-          JAKOCUP: <div>자코컵</div>,
-          CHAMPIONSHIP: <div>결승</div>,
+          JAKOCUP: <Jakocup memberRoundData={currentRoundData} />,
+          CHAMPIONSHIP: <FinalRound memberRoundData={currentRoundData} />,
         }[roundSelection.round]
       }
     </div>

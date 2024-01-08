@@ -218,6 +218,8 @@ function getNameFromCode(code: string) {
       return "예선";
     case "GROUP_STAGE":
       return "그룹 스테이지";
+    case "TOTAL":
+      return "총합 결과";
     case "CHAMPIONSHIP":
       return "결승";
     case "JAKOCUP":

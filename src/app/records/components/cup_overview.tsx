@@ -22,8 +22,6 @@ export default function CupOverview() {
     ? makeCupOverviewData(currentCup, roundData)
     : null;
 
-  console.log(cupOverviewData);
-
   return (
     cupOverviewData && (
       <div className="flex flex-col gap-3 py-6 font-notoSans">

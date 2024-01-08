@@ -35,7 +35,24 @@ function sumRacePoints(race_results: number[], ParticipantCount?: number) {
     11: 1,
   };
 
-  if (ParticipantCount && ParticipantCount == 11) {
+  const point_table_3: { [key: number]: number } = {
+    1: 12,
+    2: 10,
+    3: 8,
+    4: 7,
+    5: 6,
+    6: 5,
+    7: 4,
+    8: 3,
+    9: 2,
+    10: 1,
+  };
+
+  if (ParticipantCount && ParticipantCount == 10) {
+    return race_results?.reduce((acc, cur) => {
+      return acc + (point_table_3[cur] ? point_table_3[cur] : 0);
+    }, 0);
+  } else if (ParticipantCount && ParticipantCount == 11) {
     return race_results?.reduce((acc, cur) => {
       return acc + (point_table_2[cur] ? point_table_2[cur] : 0);
     }, 0);

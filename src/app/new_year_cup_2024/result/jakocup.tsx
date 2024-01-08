@@ -4,17 +4,17 @@ import RaceResults from "@/components/race_results";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   Table,
-  TableHeader,
-  TableRow,
-  TableHead,
   TableBody,
   TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
 import { useBaseData } from "@/lib/store";
 import { RoundType } from "@/lib/typeDef";
-import { convertMemberCodeToName, sumRacePoints } from "@/lib/utils";
+import { sumRacePoints, convertMemberCodeToName } from "@/lib/utils";
 
-const FinalRound = ({ memberRoundData }: { memberRoundData: RoundType[] }) => {
+const Jakocup = ({ memberRoundData }: { memberRoundData: RoundType[] }) => {
   const memberData = useBaseData((state) => state.memberData);
 
   return (
@@ -84,4 +84,4 @@ const FinalRound = ({ memberRoundData }: { memberRoundData: RoundType[] }) => {
   );
 };
 
-export default FinalRound;
+export default Jakocup;
